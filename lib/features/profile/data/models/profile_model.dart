@@ -13,8 +13,7 @@ class ProfileModel extends Profile {
   }) : super(fullName: '$firstName $lastName');
 
   //convert dari json to object dart (GET request)
-  factory ProfileModel.fromJson(Map<String, dynamic> dataJson) {
-    Map<String, dynamic> json = dataJson["data"];
+  factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
       imageUrl: json['avatar'],
       firstName: json['first_name'],
@@ -33,5 +32,12 @@ class ProfileModel extends Profile {
       "email": email,
       "id": id,
     };
+  }
+
+  static List<ProfileModel> fromJsonList(List data) {
+    if (data.isEmpty) {
+      return [];
+    }
+    return data.map((e) => ProfileModel.fromJson(e)).toList();
   }
 }
