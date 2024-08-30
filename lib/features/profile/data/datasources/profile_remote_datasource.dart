@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:clean_architecture_learn/features/profile/data/models/profile_model.dart';
+import '../models/profile_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class ProfileRemoteDataSource {

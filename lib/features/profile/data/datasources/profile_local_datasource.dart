@@ -1,5 +1,6 @@
-import 'package:clean_architecture_learn/features/profile/data/models/profile_model.dart';
 import 'package:hive/hive.dart';
+
+import '../models/profile_model.dart';
 
 abstract class ProfileLocalDataSource {
   Future<List<ProfileModel>> getAllProfiles(int page);
