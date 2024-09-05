@@ -1,4 +1,8 @@
+import 'package:clean_architecture_learn/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/profile_bloc.dart';
 
 class DetailUserPage extends StatelessWidget {
   final int id;
@@ -16,29 +20,40 @@ class DetailUserPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image.network(
-                "https://picsum.photos/200/200?random=$id",
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text('Name: User $id'),
-          Text('Email: user$id@example.com'),
-          const Text('Address: Street 1, City, State, Zipcode'),
-          const Text('Phone: 123-456-7890'),
-          const SizedBox(height: 20),
-        ],
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        bloc: myInjection<ProfileBloc>()..add(ProfileDetailEvent(id)),
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ProfileSuccess) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.network(
+                      state.profile.imageUrl,
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text('Name: ${state.profile.fullName}'),
+                Text('Email: ${state.profile.email}'),
+                const SizedBox(height: 20),
+              ],
+            );
+          } else if (state is ProfileFailed) {
+            return const Text('Failed to load profile');
+          } else {
+            return const SizedBox();
+          }
+        },
       ),
     );
   }

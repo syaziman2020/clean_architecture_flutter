@@ -1,6 +1,7 @@
-import 'package:clean_architecture_learn/features/profile/presentation/pages/all_users_page.dart';
-import 'package:clean_architecture_learn/features/profile/presentation/pages/detail_user_page.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../features/profile/presentation/pages/all_users_page.dart';
+import '../../features/profile/presentation/pages/detail_user_page.dart';
 
 class MyRouter {
   get router => GoRouter(

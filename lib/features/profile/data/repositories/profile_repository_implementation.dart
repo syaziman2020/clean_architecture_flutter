@@ -11,11 +11,11 @@ import 'package:hive/hive.dart';
 class ProfileRepositoryImplementation extends ProfileRepository {
   final ProfileRemoteDataSource remoteDataSource;
   final ProfileLocalDataSource localDataSource;
-  final HiveInterface hive;
+  final Box box;
   ProfileRepositoryImplementation(
       {required this.remoteDataSource,
       required this.localDataSource,
-      required this.hive});
+      required this.box});
 
   @override
   Future<Either<Failure, List<Profile>>> getAllProfiles(int page) async {
@@ -27,7 +27,7 @@ class ProfileRepositoryImplementation extends ProfileRepository {
         return Right(result);
       } else {
         List<ProfileModel> result = await remoteDataSource.getAllProfiles(page);
-        var box = hive.box("profile_box");
+
         box.put('getAllProfiles', result);
         return Right(result);
       }
@@ -46,7 +46,7 @@ class ProfileRepositoryImplementation extends ProfileRepository {
         return Right(result);
       } else {
         ProfileModel result = await remoteDataSource.getProfileById(id);
-        var box = hive.box("profile_box");
+
         box.put('getProfile', result);
         return Right(result);
       }

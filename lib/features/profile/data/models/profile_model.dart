@@ -1,9 +1,14 @@
+import 'package:hive/hive.dart';
+
 import '../../domain/entities/profile.dart';
+part 'profile_model.g.dart'; //hive generated
 
+@HiveType(typeId: 1)
 class ProfileModel extends Profile {
+  @HiveField(4)
   final String firstName;
+  @HiveField(5)
   final String lastName;
-
   const ProfileModel({
     required super.imageUrl,
     required this.firstName,

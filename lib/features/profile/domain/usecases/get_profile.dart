@@ -3,9 +3,9 @@ import '../entities/profile.dart';
 import '../repositories/profile_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class GetUser {
+class GetProfile {
   final ProfileRepository profileRepository;
-  const GetUser(this.profileRepository);
+  const GetProfile(this.profileRepository);
 
   Future<Either<Failure, Profile>> execute(int id) async {
     return await profileRepository.getProfileById(id);
